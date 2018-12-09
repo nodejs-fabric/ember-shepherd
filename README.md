@@ -116,9 +116,9 @@ Thanks to [jquery-disablescroll](https://github.com/ultrapasty/jquery-disablescr
 
 > **default value:** `false`
 
-### modal
+### useModalOverlay
 
-`modal` is a boolean, that should be set to true, if you would like the rest of the screen, other than the current element, greyed out, and the current element highlighted. If you do not need modal functionality, you can remove this option or set it to false.
+`useModalOverlay` is a boolean, that should be set to true, if you would like the rest of the screen, other than the current element, greyed out, and the current element highlighted. If you do not need modal functionality, you can remove this option or set it to false.
 
 > **default value:** `false`
 

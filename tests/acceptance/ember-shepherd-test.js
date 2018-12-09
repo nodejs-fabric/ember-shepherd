@@ -4,11 +4,6 @@ import { later } from '@ember/runloop';
 import { setupApplicationTest } from 'ember-qunit';
 import { builtInButtons, steps as defaultSteps } from '../data';
 
-import {
-  elementIds as modalElementIds,
-  classNames as modalClassNames,
-} from 'ember-shepherd/utils/modal';
-
 module('Acceptance | Tour functionality tests', function(hooks) {
   let tour;
 
@@ -124,103 +119,6 @@ module('Acceptance | Tour functionality tests', function(hooks) {
       const currentStepId = document.body.getAttribute('data-shepherd-step');
 
       assert.equal(currentStepId, 'error');
-    });
-  });
-
-  module('Modal mode', function () {
-    test('Displaying the modal during tours when modal mode is enabled', async function(assert) {
-      await visit('/');
-
-      assert.equal(document.querySelector(`#${modalElementIds.modalOverlay}`), null, 'modal overlay is not present in the DOM before any tour is started');
-
-      await click('.toggleHelpModal');
-
-      const modalOverlay = document.querySelector(`#${modalElementIds.modalOverlay}`);
-
-      assert.equal(getComputedStyle(modalOverlay).display, 'block', 'modal overlay is present and displayed after the tour starts');
-
-      assert.ok(document.body.classList.contains('shepherd-active'), 'Body gets class of shepherd-active, when shepherd becomes active');
-      assert.ok(document.body.classList.contains(modalClassNames.isVisible), `Body gets class of "${modalClassNames.isVisible}" when shepherd becomes active`);
-      assert.equal(document.querySelectorAll('.shepherd-enabled').length, 1, 'attachTo element has the shepherd-enabled class');
-    });
-
-    test('Hiding the modal during tours when modal mode is not enabled', async function(assert) {
-      await visit('/');
-
-      assert.equal(document.querySelector(`#${modalElementIds.modalOverlay}`), null, 'modal overlay is not present in the DOM before any tour is started');
-
-      await click('.toggleHelpNonmodal');
-
-      const modalOverlay = document.querySelector(`#${modalElementIds.modalOverlay}`);
-
-      assert.equal(getComputedStyle(modalOverlay).display, 'none', 'modal overlay is present but not displayed after the tour starts');
-
-      assert.ok(document.body.classList.contains('shepherd-active'), 'Body gets class of shepherd-active, when shepherd becomes active');
-      assert.notOk(document.body.classList.contains(modalClassNames.isVisible), `Body has no class of "${modalClassNames.isVisible}" when shepherd is active but not in modal mode`);
-      assert.equal(document.querySelectorAll('.shepherd-enabled').length, 1, 'attachTo element has the shepherd-enabled class');
-    });
-
-    test('applying highlight classes to the target element', async function(assert) {
-      assert.expect(2);
-
-      const steps = [{
-        id: 'test-highlight',
-        options: {
-          attachTo: '.first-element bottom',
-          buttons: [
-            builtInButtons.cancel,
-            builtInButtons.next
-          ],
-          highlightClass: 'highlight',
-          text: ['Testing highlight']
-        }
-      }];
-
-      await visit('/');
-
-      tour.addSteps(steps);
-      tour.set('modal', true);
-
-      await click('.toggleHelpModal');
-
-      assert.ok(tour.get('tourObject').currentStep.target.classList.contains('highlight'),
-        'currentElement has highlightClass applied');
-
-      await click(document.querySelector('.cancel-button'));
-
-      assert.notOk(tour.get('tourObject').currentStep.target.classList.contains('highlight'),
-        'highlightClass removed on cancel');
-    });
-
-    test('Highlight applied when `tour.modal == false`', async function(assert) {
-      assert.expect(2);
-
-      const steps = [{
-        id: 'test-highlight',
-        options: {
-          attachTo: '.first-element bottom',
-          buttons: [
-            builtInButtons.cancel,
-            builtInButtons.next
-          ],
-          highlightClass: 'highlight',
-          text: ['Testing highlight']
-        }
-      }];
-
-      await visit('/');
-
-      tour.addSteps(steps);
-
-      await click('.toggleHelpNonmodal');
-
-      assert.ok(tour.get('tourObject').currentStep.target.classList.contains('highlight'),
-        'currentElement has highlightClass applied');
-
-      await click(document.querySelector('.cancel-button'));
-
-      assert.notOk(tour.get('tourObject').currentStep.target.classList.contains('highlight'),
-        'highlightClass removed on cancel');
     });
   });
 

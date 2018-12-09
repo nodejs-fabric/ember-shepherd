@@ -6,11 +6,11 @@ export default Controller.extend({
 
   actions: {
     toggleHelpModal() {
-      this.get('tour').set('modal', true);
+      this.get('tour').set('useModalOverlay', true);
       this.get('tour').start();
     },
     toggleHelpNonmodal() {
-      this.get('tour').set('modal', false);
+      this.get('tour').set('useModalOverlay', false);
       this.get('tour').start();
     }
   }

@@ -75,23 +75,7 @@ function getElementFromString(element) {
   return document.querySelector(selector);
 }
 
-
-/**
- * Remove any leftover .shepherd-modal classes and add the .shepherd-modal class to the currentElement
- * @param {HTMLElement} currentElement The element for the current step
- */
-function toggleShepherdModalClass(currentElement) {
-  const shepherdModal = document.querySelector('.shepherd-modal');
-
-  if (shepherdModal) {
-    shepherdModal.classList.remove('shepherd-modal');
-  }
-
-  currentElement.classList.add('shepherd-modal');
-}
-
 export {
   elementIsHidden,
   getElementForStep,
-  toggleShepherdModalClass,
 };

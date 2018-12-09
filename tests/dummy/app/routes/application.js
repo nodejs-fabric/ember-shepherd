@@ -14,7 +14,7 @@ export default Route.extend({
 
     tour.set('defaultStepOptions', defaultStepOptions);
     tour.set('disableScroll', this.get('disableScroll'));
-    tour.set('modal', true);
+    tour.set('useModalOverlay', true);
     tour.set('confirmCancel', false);
 
     tour.addSteps(defaultSteps);
