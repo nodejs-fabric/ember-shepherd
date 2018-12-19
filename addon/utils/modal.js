@@ -146,10 +146,20 @@ function getModalMaskOpening(modalElement) {
   return modalElement.querySelector(`#${elementIds.modalOverlayMaskOpening}`);
 }
 
+function preventModalBodyTouch(event) {
+  event.preventDefault();
+}
+
+function preventModalOverlayTouch(event) {
+  event.stopPropagation();
+}
+
 
 export {
   createModalOverlay,
   positionModalOpening,
+  preventModalBodyTouch,
+  preventModalOverlayTouch,
   closeModalOpening,
   getModalMaskOpening,
   elementIds,

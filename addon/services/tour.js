@@ -16,6 +16,8 @@ import {
 import {
   getModalMaskOpening,
   createModalOverlay,
+  preventModalBodyTouch,
+  preventModalOverlayTouch,
   positionModalOpening,
   closeModalOpening,
   classNames as modalClassNames
@@ -143,6 +145,8 @@ export default Service.extend(Evented, {
     cleanupStepEventListeners.bind(this)();
     cleanupSteps(this.tourObject);
     cleanupModal.bind(this)();
+
+    window.removeEventListener('touchmove', preventModalBodyTouch, false);
   },
 
   /**
@@ -325,6 +329,15 @@ export default Service.extend(Evented, {
       this._showOrHideModal('hide');
 
       document.body.appendChild(this._modalOverlayElem);
+
+      const overlay = document.querySelector('#shepherdModalOverlayContainer');
+      // Prevents window from moving on touch.
+      window.addEventListener('touchmove', preventModalBodyTouch, false);
+
+      // Allows content to move on touch.
+      overlay
+        .querySelector('.body-container')
+        .addEventListener('touchmove', preventModalOverlayTouch, false);
     }
   },
 
